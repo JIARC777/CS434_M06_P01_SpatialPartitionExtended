@@ -47,24 +47,24 @@ namespace SpatialPartitionPattern
             int cellZ = Mathf.FloorToInt((friendlySoldier.soldierTrans.position.z / cellSize));
 
             Soldier enemy;
-            // Some cells dont have anyone 
             enemy = cells[cellX, cellZ];
+            if (enemy != null && enemy.soldierTrans == null)
+                enemy = null;
 
-            
             Soldier closestSoldier = null;
             float bestDistSqr = Mathf.Infinity;
             while (enemy != null)
             {
-                // Sometimes an object that was just destroyed gets queired before its removed from the list
-               // if (enemy.soldierTrans != null)
-               // {
+                //  Sometimes an object that was just destroyed gets queired before its removed from the list
+                //  if (enemy.soldierTrans != null)
+                // {
                     float distSqr = (enemy.soldierTrans.position - friendlySoldier.soldierTrans.position).sqrMagnitude;
                     if (distSqr < bestDistSqr)
                     {
                         bestDistSqr = distSqr;
                         closestSoldier = enemy;
                     }
-             //   }
+               // }
                 enemy = enemy.nextSoldier;
             }
             return closestSoldier;

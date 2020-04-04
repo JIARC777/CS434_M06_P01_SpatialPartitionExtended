@@ -60,7 +60,7 @@ namespace SpatialPartitionPattern
         
         void Update()
         {
-            
+            closestFriendlies.Clear();
             closestEnemies.Clear();
             // The code to change materials is duplicated to make analyzing timestamps easy and accurate as the only line to change is the search algorthim
             // Timestamp start for using slow algorthm
@@ -68,8 +68,17 @@ namespace SpatialPartitionPattern
             bool isDestroyed = false;
             for (int i = 0; i < friendlySoldiers.Count; i++)
             {
+                // For Some Reason Destoyed units will Still Look for a closest Enemy. To avoid that check for a null soldier and remove
+                /*
+                if (friendlySoldiers[i] == null)
+                {
+                    friendlySoldiers.RemoveAt(i);
+                    continue;
+                }
+                */
                 Soldier closestEnemy;   
                 closestEnemy = enemyGrid.FindClosestEnemy(friendlySoldiers[i]);
+                
                 friendlySoldiers[i].soldierMeshRenderer.material = friendlyMaterial;
                 //closestEnemy = FindClosestEnemySlow(friendlySoldiers[i]);
                 if (closestEnemy != null)
@@ -92,6 +101,14 @@ namespace SpatialPartitionPattern
             float endTimeStamp = Time.realtimeSinceStartup * 1000;
             for (int i = 0; i < enemySoldiers.Count; i++)
             {
+                // For Some Reason Destoyed units will Still Look for a closest Enemy. To avoid that check for a null soldier and remove
+                /*
+                if (enemySoldiers[i] == null)
+                {
+                    enemySoldiers.RemoveAt(i);
+                    continue;
+                }
+                */
                 Soldier closestFriendly;
                 closestFriendly = friendlyGrid.FindClosestEnemy(enemySoldiers[i]);
                 enemySoldiers[i].soldierMeshRenderer.material = enemyMaterial;

@@ -74,7 +74,8 @@ namespace SpatialPartitionPattern
         bool KillSoldier()
         {
             grid.Move(this, oldPos, true);
-            GameObject.Destroy(this.soldierMeshRenderer);
+            //GameObject.Destroy(this.soldierMeshRenderer);
+            GameObject.Destroy(this.soldierGO);
             return true;
 
         }
